@@ -1,0 +1,22 @@
+.container{
+    width:100%;
+}
+.center{
+    margin-left:auto;
+    width:60%;
+    padding: 10px;
+}
+.inputsearch{
+    padding-right: 2em;
+    margin-right: 2em;
+    border : .2em solid;
+}
+.btnsubmit{
+    border:.2em solid;
+    margin-bottom: 2em;
+}
+
+.searchspace{
+    margin-top: 2em;
+}
+.loading { border:1px solid #ddd; padding:20px; margin:40px 5px; width:80px;}
