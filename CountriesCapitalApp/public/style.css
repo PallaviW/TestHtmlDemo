@@ -1,0 +1,23 @@
+.container{
+    width :100%;
+}
+.center {
+    margin: auto;
+    width: 60%;
+    padding: 10px;
+}
+hr {
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: .2em;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 2px;
+}
+.header{
+    margin-left: 34em;
+}
+table{
+    border:.1em solid;
+}

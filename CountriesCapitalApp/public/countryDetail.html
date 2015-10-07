@@ -1,0 +1,15 @@
+<div data-ng-controller="CountryDeatilCtrl" xmlns:http="http://www.w3.org/1999/xhtml">
+<p><h1>{{country}}</h1></p>
+
+    <div>
+        <span>Population of Country : </span> {{population | number}} <br>
+        <span>Area : </span> {{area | number}}<br>
+        <span>Capital : </span> {{capital}}<br>
+        <span>Population of Capital : </span><br>
+        <span>3 neighbors : </span><br>
+        <span><img id="myImage" src="http://www.geonames.org/img/country/250/{{code | uppercase}}.png"></span><span><img src="http://www.geonames.org/flags/x/{{code | lowercase}}.gif"></span>
+    </div>
+
+
+</div>
+
