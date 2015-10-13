@@ -12,7 +12,7 @@
         background-color: #ffffff;
     }
 </style>
-<div data-ng-controller="CountryCtrl">
+<div data-ng-controller="CDCtrl">
 
 <table>
     <th>Name</th>
@@ -22,7 +22,7 @@
     <th>Population</th>
     <th>Continent</th>
     <tr data-ng-repeat=" country in countries">
-      <td><a href="#/countries/{{country.countryName}}/{{country.capital}}/{{country.population}}/{{country.areaInSqKm}}/{{country.countryCode}}">{{country.countryName}}</a></td>
+      <td><a href="#/countries/{{country.countryCode | uppercase}}">{{country.countryName}}</a></td>
         <td>{{country.countryCode}}</td>
         <td>{{country.capital}}</td>
         <td>{{country.areaInSqKm | number}}</td>

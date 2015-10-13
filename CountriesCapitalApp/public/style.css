@@ -21,3 +21,12 @@ hr {
 table{
     border:.1em solid;
 }
+.neighbor{
+    margin-right: .4em;
+    margin-left: .2em;
+    float:left;
+}
+.neighborhd{
+
+    float:left;
+}

@@ -11,34 +11,11 @@ angular.module('MyApp',['ngRoute'])
             })
             .when('/countries',{
             templateUrl:'./country.html',
-            Controller:'CountryCtrl'
+            Controller:'CDCtrl'
             })
-            .when('/countries/:country/:capital/:population/:area/:code',{
+            .when('/countries/:countryCode',{
                 templateUrl:'./countryDetail.html',
-                Controller:'CountryDeatilCtrl',
-                resolve: {
-                    capitalpopulation : function($route,$http){
-                        var capitalpopulation ;
-                        var country = $route.current.params.country;
-                        var capital = $route.current.params.capital;
-                        var code = $route.current.params.code;
-                        var url="http://api.geonames.org/searchJSON?q="+country+"&name="+capital+"&name_equals="+capital+"&country="+code+"&isNameRequired=true&fcode=PPLC&username=demo&style=full";
-                        $http.get(url).success(function(data){
-
-                        })
-
-                        return capitalpopulation;
-                    },
-                    neighbors:function($route,$http){
-                            var neighbors ;
-                            var code = $route.current.params.code;
-                            var url="http://api.geonames.org/neighboursJSON?country="+code+"&username=demo";
-                            alert(url);
-                            $http.get(url).success(function(data){
-                                alert(data.geonames.countryName);
-                            })
-                    }
-                }
+                Controller:'CountryDeatilCtrl'
             })
 
         .when('/error', {
@@ -49,25 +26,71 @@ angular.module('MyApp',['ngRoute'])
         });
 
 })
-
-.controller('CountryCtrl', function($scope , $http) {
-
-        $http.get("http://api.geonames.org/countryInfoJSON?formatted=true&lang=it&username=demo&style=full").success(function(data){
-        $scope.countries = data.geonames;
-        })
-
-
-})
     .controller('HomeCtrl', function($scope) {
         //empty for now
     })
-    .controller('CountryDeatilCtrl', ['$scope', '$routeParams',
-        function($scope, $routeParams){
 
-        $scope.country = $routeParams.country;
-        $scope.capital =  $routeParams.capital;
-        $scope.population = $routeParams.population;
-        $scope.area = $routeParams.area;
-        $scope.code = $routeParams.code;
+.controller('CountryDeatilCtrl', ['$scope', '$route','countries',
+        function($scope, $route,countries) {
+            var code = $route.current.params.countryCode;
+            countries.getCountryDetail().then(function(result){
+                $scope.country = result.geonames[0];
+                });
+            countries.getCapitalDetails().then(function(result){
+                $scope.capitalpopulation = result.geonames[0].population;
+            });
 
-    }]);
+            countries.getneighbors().then(function(result){
+                console.log(result.geonames);
+                $scope.neighbors = result.geonames;
+                });
+        }
+])
+    .controller('CDCtrl',['$scope','countries',function($scope,countries){
+        countries.getCountryList().then(function(result){
+            $scope.countries = result.geonames;
+        });
+    }])
+
+
+    .factory('countries', ['$http', '$route', function($http,$route){
+        console.log($route.current.params.countryCode);
+        return ({
+
+            getCountryList : getCountryList,
+            getCountryDetail : getCountryDetail,
+            getneighbors : getneighbors,
+            getCapitalDetails :getCapitalDetails
+        });
+
+        function getCountryList(){
+                var url = "http://api.geonames.org/countryInfoJSON?username=pallaviw";
+                var request = $http.get(url, { cache: true });
+                return (request.then(handleSuccess, handleError));
+        };
+
+        function getCountryDetail(){
+                var url = "http://api.geonames.org/countryInfoJSON?formatted=true&lang=it&username=pallaviw&style=full&country=" +$route.current.params.countryCode ;
+                var request = $http.get(url);
+                return (request.then(handleSuccess, handleError));
+        };
+
+        function getneighbors(){
+            var urlforneighbor="http://api.geonames.org/neighboursJSON?country="+$route.current.params.countryCode+"&username=pallaviw";
+            var request = $http.get(urlforneighbor);
+            return (request.then(handleSuccess, handleError));
+        };
+
+        function getCapitalDetails(){
+            var url = "http://api.geonames.org/searchJSON?formatted=true&username=pallaviw&q=capital&&style=full&country=" + $route.current.params.countryCode;
+            var request = $http.get(url);
+            return (request.then(handleSuccess, handleError));
+
+        };
+        function handleError(response) {
+
+        }
+        function handleSuccess(response) {
+            return (response.data);
+        }
+    }])

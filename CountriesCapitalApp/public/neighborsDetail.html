@@ -1,4 +1,4 @@
-<div data-ng-controller="CountryDeatilCtrl" xmlns:http="http://www.w3.org/1999/xhtml">
+<div data-ng-controller="NeighborsCtrl" xmlns:http="http://www.w3.org/1999/xhtml">
 
     <p><h1>{{country.countryName}}</h1></p>
 
@@ -9,7 +9,7 @@
         <span>Population of Capital : </span> {{capitalpopulation}}<br>
         <div class="neighborhd">3 neighbors :</div>
         <div class="neighbor" data-ng-repeat="neighbor in neighbors | limitTo : 3">
-            <a href="#/countries/{{neighbor.countryCode | uppercase}}"> {{neighbor.name}} </a>
+            <a href="#/countries/{{neighbor.countryCode | uppercase}}/{{neighbor.capital}}"> {{neighbor.name}} </a>
         </div><br>
         <span><img id="myImage" src="http://www.geonames.org/img/country/250/{{country.countryCode | uppercase}}.png"></span><span><img src="http://www.geonames.org/flags/x/{{country.countryCode | lowercase}}.gif"></span>
     </div>
@@ -19,4 +19,3 @@
 <div align="center">
     <a href="#/">Home</a>  <a href="#/countries">Browse Countries</a>
 </div>
-
